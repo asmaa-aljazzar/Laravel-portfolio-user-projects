@@ -41,11 +41,10 @@ class ProjectController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'user_id' => 'required|exists:users,id' // check if submitted user_id is in users table
+            'description' => 'required|string|max:255',
         ]);
 
-        Project::create($data);
+        User::findOrFail(1)->projects()->create($data);
         return redirect()->route('projects.index')->with('success', 'Project created successfully');
         // In tinker check the saved project with:
         //* App\Models\Project::latest('id')->first();
@@ -65,7 +64,9 @@ class ProjectController extends Controller
      */
     public function edit(string $id)
     {
-        
+        // projects: is the one to many function we put in user model
+        $project = User::findOrFail (1)->projects()->findOrFail ($id);
+        return view ('portfolio.projects.edit', compact ('project'));
     }
 
     /**
@@ -73,13 +74,27 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'status' => 'required|in:Pending,In Progress,Completed'
+        ]);
+
+        $project = User::findOrFail(1)->projects()->findOrFail($id);
+        $project->update($data);
+
+        return redirect()->route('projects.index')
+        ->with('success', 'Project updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id) {
+        $project = User::findOrFail (1)->projects ()->findOrFail ($id);
+        $project->delete ();
 
+        return redirect ()->route ("projects.index")
+        ->with ('success', 'Project deleted successfully');
     }
 }

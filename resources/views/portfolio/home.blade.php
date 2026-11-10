@@ -7,7 +7,7 @@
     <h1>Hello, I'm<br>{{ $developer['name'] }}.</h1>
     <p class="intro">{{ $developer['job_title'] ?: 'Developer' }}</p>
     <p class="intro">Explore my projects and the skills I bring to my work.</p>
-    <a class="button" href="{{ route('projects') }}">Explore my projects &rarr;</a>
+    <a class="button" href="{{ route('projects.index') }}">Explore my projects &rarr;</a>
     <section class="section" aria-labelledby="skills-title">
         <div class="eyebrow">My toolkit</div>
         <h2 id="skills-title">Skills &amp; technologies</h2>

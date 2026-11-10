@@ -35,6 +35,19 @@
         footer { border-top: 1px solid #dce4dd; padding: 24px 0; color: #61716c; font-size: 13px; }
         a:focus-visible { outline: 3px solid #c79435; outline-offset: 5px; }
         @media (max-width: 600px) { main { padding: 40px 0; } }
+        label { display: block; font-weight: 600; margin-bottom: 6px; }
+        input, textarea, select { width: 100%; padding: 12px; border: 1px solid #aebfb4; border-radius: 8px; font: inherit; background: white; color: inherit; }
+        textarea { min-height: 150px; resize: vertical; }
+        .field { margin-bottom: 24px; }
+        .form-panel { max-width: 720px; margin-top: 32px; }
+        button { font: inherit; cursor: pointer; border: 0; }
+        .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 24px; }
+        .actions .button { margin: 0; }
+        .danger { background: #9b3030; }
+        .error { color: #9b3030; font-size: 14px; margin: 6px 0; }
+        .notice { padding: 14px 20px; border: 1px solid #b2d9bf; border-radius: 8px; background: #e0f2e6; margin-bottom: 24px; }
+        .description { white-space: pre-wrap; overflow-wrap: anywhere; }
+        input:focus-visible, textarea:focus-visible, select:focus-visible, button:focus-visible { outline: 3px solid #c79435; outline-offset: 3px; }
     </style>
 </head>
 <body>
@@ -43,11 +56,16 @@
             <a class="brand" href="{{ route('home') }}">Portfolio.</a>
             <div class="links">
                 <a href="{{ route('home') }}" @if(request()->routeIs('home')) aria-current="page" @endif>Home</a>
-                <a href="{{ route('projects') }}" @if(request()->routeIs('projects')) aria-current="page" @endif>Projects</a>
+                <a href="{{ route('projects.index') }}" @if(request()->routeIs('projects.*')) aria-current="page" @endif>Projects</a>
             </div>
         </nav>
     </header>
-    <main class="container">@yield('content')</main>
+    <main class="container">
+        @if(session('success'))
+            <div class="notice" role="status">{{ session('success') }}</div>
+        @endif
+        @yield('content')
+    </main>
     <footer><div class="container">&copy; {{ date('Y') }} Portfolio. All rights reserved.</div></footer>
 </body>
 </html>
