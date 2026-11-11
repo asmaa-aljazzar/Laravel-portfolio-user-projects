@@ -35,6 +35,8 @@ use App\Http\Controllers\ProjectController;
 //profolio
 
 Route::get('/', [PortfolioController::class, 'home'])->name('home');
+Route::get('/profile/edit', [PortfolioController::class, 'edit'])->name('profile.edit');
+Route::put('/profile', [PortfolioController::class, 'update'])->name('profile.update');
 //? Route::resource() takes the controller class only. Laravel automatically maps its methods
 Route::resource('/projects', ProjectController::class);
 // Route::get('/contact', [PortfolioController::class, 'contact'])->name('contact');
