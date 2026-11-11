@@ -5,10 +5,12 @@ namespace App\Http\Controllers; // The namespace this class belongs to
 
 use Illuminate\Http\Request; // need for request form data
 
-use App\Models\Project; // need for model
+// use App\Models\Project; // need for model
 use App\Models\User; // need for model
 
 // PascalCase
+// camelCase
+// snake_case
 class ProjectController extends Controller
 {
     /**
@@ -16,8 +18,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        // Todo: search for this method
         $user = User::findOrFail(1);
-        $projects = $user->projects;
+        $projects = $user->projects();
         return view('portfolio.projects.index', compact('projects'));
     }
 
@@ -32,7 +35,7 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    //? 	Receives form data and saves a new record
+    //? Receives form data and saves a new record
     // Validates the submitted title and description and userId.
     // Creates a project in the database.
     // Redirects to the projects list with a success message.
@@ -44,7 +47,8 @@ class ProjectController extends Controller
             'description' => 'required|string|max:255',
         ]);
 
-        User::findOrFail(1)->projects()->create($data);
+        $user = User::findOrFail(1);
+        $user->projects()->create($data);
         return redirect()->route('projects.index')->with('success', 'Project created successfully');
         // In tinker check the saved project with:
         //* App\Models\Project::latest('id')->first();

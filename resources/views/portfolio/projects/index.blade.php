@@ -20,7 +20,7 @@
                     @include('portfolio.projects._delete')
                 </div>
             </article>
-        @empty
+        @empty 
             <div class="empty">
                 <h2>Projects are on the way</h2>
                 <p>New work will appear here soon. Check back for updates.</p>
